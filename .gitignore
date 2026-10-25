@@ -1,0 +1,29 @@
+# Sensitive configuration
+.env
+.env.*
+!.env.example
+
+# Local database configuration
+/database.php
+
+# Composer dependencies
+/vendor/
+
+# Uploaded files and temporary storage
+/uploads/
+/storage/uploads/
+/tmp/
+
+# Database dumps
+*.sql
+*.sql.gz
+*.sqlite
+
+# Logs
+*.log
+
+# Editor and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
