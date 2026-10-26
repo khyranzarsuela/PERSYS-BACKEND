@@ -38,6 +38,14 @@ function db(): PDO
 
     $caPath = getenv('DB_SSL_CA');
 
+    error_log(
+    'PERSYS SSL diagnostic: ' .
+    'DB_SSL_CA=' . ($caPath ?: '[not set]') .
+    '; file_exists=' . ($caPath && file_exists($caPath) ? 'YES' : 'NO') .
+    '; readable=' . ($caPath && is_readable($caPath) ? 'YES' : 'NO') .
+    '; expected_file_exists=' . (file_exists('/etc/secrets/aiven-ca.pem') ? 'YES' : 'NO')
+);
+
     if (!$caPath || !is_file($caPath) || !is_readable($caPath)) {
     error_log('PERSYS SSL certificate missing or unreadable.');
     throw new RuntimeException('Database SSL configuration failed.');
