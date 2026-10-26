@@ -55,4 +55,4 @@ RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
 
 EXPOSE 10000
 
-CMD ["apache2-foreground"]
+CMD ["sh", "-c", "cp /etc/secrets/aiven-ca.pem /tmp/persys-aiven-ca.pem && chmod 644 /tmp/persys-aiven-ca.pem && exec apache2-foreground"]
