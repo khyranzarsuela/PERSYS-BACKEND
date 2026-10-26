@@ -1,0 +1,9 @@
+# PERSYS Backend Security
+
+# Block direct access to database configuration files
+<FilesMatch "^database(\.render)?\.php$">
+    Require all denied
+</FilesMatch>
+
+# Prevent directory listings
+Options -Indexes

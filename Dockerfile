@@ -22,8 +22,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         xml \
     && rm -rf /var/lib/apt/lists/*
 
-# Enable Apache rewrite rules
-RUN a2enmod rewrite
+# Enable Apache rewrite rules and .htaccess protection
+RUN a2enmod rewrite \
+    && sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
@@ -43,6 +44,9 @@ RUN composer install \
 
 # Copy the backend application
 COPY . .
+
+# Use the environment-based database configuration on Render
+COPY database.render.php /var/www/html/database.php
 
 # Configure Apache to listen on Render's port
 RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf \
