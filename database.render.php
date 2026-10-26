@@ -46,6 +46,27 @@ function db(): PDO
     '; expected_file_exists=' . (file_exists('/etc/secrets/aiven-ca.pem') ? 'YES' : 'NO')
 );
 
+$sslFile = '/etc/secrets/aiven-ca.pem';
+
+clearstatcache(true, $sslFile);
+
+$permissions = @fileperms($sslFile);
+$owner = @fileowner($sslFile);
+$group = @filegroup($sslFile);
+
+error_log(
+    'PERSYS SSL permissions: ' .
+    'permissions=' . (
+        $permissions !== false
+            ? substr(sprintf('%o', $permissions), -4)
+            : 'UNKNOWN'
+    ) .
+    '; owner=' . ($owner !== false ? $owner : 'UNKNOWN') .
+    '; group=' . ($group !== false ? $group : 'UNKNOWN') .
+    '; php_user=' . (function_exists('posix_geteuid') ? posix_geteuid() : 'UNKNOWN') .
+    '; readable=' . (is_readable($sslFile) ? 'YES' : 'NO')
+);
+
     if (!$caPath || !is_file($caPath) || !is_readable($caPath)) {
     error_log('PERSYS SSL certificate missing or unreadable.');
     throw new RuntimeException('Database SSL configuration failed.');
