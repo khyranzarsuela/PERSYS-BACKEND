@@ -38,6 +38,11 @@ function db(): PDO
 
     $caPath = getenv('DB_SSL_CA');
 
+    if (!$caPath || !is_file($caPath) || !is_readable($caPath)) {
+    error_log('PERSYS SSL certificate missing or unreadable.');
+    throw new RuntimeException('Database SSL configuration failed.');
+}
+
     if ($caPath) {
         $options[PDO::MYSQL_ATTR_SSL_CA] = $caPath;
         $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = true;
