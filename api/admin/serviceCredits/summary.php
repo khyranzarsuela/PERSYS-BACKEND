@@ -201,6 +201,10 @@ try {
     echo json_encode([
         'success' => true,
         'data' => [
+            'admin' => [
+                'username'  => $_SESSION['username'],
+                'role_name' => $_SESSION['role_name'],
+            ],
             'total_local_credits' => $totalLocalCredits,
             'total_national_credits' => $totalNationalCredits,
             'total_upload_records' => (int) $uploadService['total_upload_records'],
