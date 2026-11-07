@@ -90,7 +90,7 @@ try {
         (int) $user['role_id'] === USER_TEACHING_ROLE_ID ||
         (int) $user['role_id'] === USER_NONTEACHING_ROLE_ID
     ) {
-        $redirect = '/PERSYS/Pages/Users/userDashboard.php';
+        $redirect = '/PERSYS-FRONTEND/Pages/Users/userDashboard.html';
     } else {
         logout_session();
 
